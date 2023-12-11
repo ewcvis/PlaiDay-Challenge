@@ -6,10 +6,12 @@ const getRandomUsers = (vulnerabilitiesCount) => {
     size: vulnerabilitiesCount,
   };
 
+  const extractNames = (data) => data;
+
   axios.get(apiUrl, { params: queryParams })
     .then((response) => {
-      console.log('Response from API:', response.data);
-      return response.data;
+      const nameList = extractNames(response.data);
+      return nameList;
     })
     .catch((error) => {
       console.error('Error making GET request:', error.message);
