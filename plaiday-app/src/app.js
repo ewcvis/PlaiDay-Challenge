@@ -28,11 +28,11 @@ app.get('/scan-result', (req, res) => {
   db.all(query, (err, rows) => {
     if (err) {
       console.error(err.message);
+      res.status(500).send('Internal Server Error');
       return;
     }
+    res.json(rows);
   });
-
-  return res.send(rows);
 });
 
 app.post('/start-scan', async (req, res) => {
@@ -58,10 +58,10 @@ app.post('/start-scan', async (req, res) => {
   db.run(query, values, (err) => {
     if (err) {
       console.error(err.message);
-      return;
+      res.status(500).send('Internal Server Error');
     }
-    return res.send(`Scan Queued with ID: ${requestId.toString()}`);
   });
+  res.send(`Scan Queued with ID: ${requestId.toString()}`);
 });
 
 app.listen(port, () => {
